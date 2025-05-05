@@ -2,9 +2,11 @@ import React, { Suspense } from "react";
 import { Text, View, StyleSheet, TouchableOpacity } from "react-native";
 import { Hello } from "@/components/Hello";
 import { api } from "@/trpc/react";
+import { authClient } from "@/trpc/auth-client";
 
 export default function Page() {
   const utils = api.useUtils();
+  const { data: session } = authClient.useSession();
 
   const handleRefetch = () => {
     utils.post.hello.reset();
@@ -13,6 +15,7 @@ export default function Page() {
   return (
     <View style={styles.container}>
       <View style={styles.main}>
+        <Text>Welcome, {session?.user.email}</Text>
         <Text style={styles.title}>Expo App Idea Generator</Text>
         <Suspense fallback={<Text>Loading...</Text>}>
           <Hello />
@@ -28,7 +31,7 @@ export default function Page() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    width: '100%',
+    width: "100%",
     alignItems: "center",
     justifyContent: "center",
     marginHorizontal: "auto",
@@ -57,7 +60,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: "black",
     padding: 10,
-    borderRadius: 10
+    borderRadius: 10,
   },
   buttonText: {
     color: "white",
