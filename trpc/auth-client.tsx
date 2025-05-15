@@ -2,6 +2,7 @@ import { createAuthClient } from "better-auth/react";
 import { expoClient } from "@better-auth/expo/client";
 import * as SecureStore from "expo-secure-store";
 import { Platform } from "react-native";
+import { getBaseUrl } from "./shared";
 
 // Create a cross-platform storage solution
 const createStorage = () => {
@@ -37,7 +38,7 @@ const createStorage = () => {
 const platformStorage = createStorage();
 
 export const authClient = createAuthClient({
-  baseURL: "http://localhost:8081" /* Base URL of your Better Auth backend. */,
+  baseURL: getBaseUrl() /* Base URL of your Better Auth backend. */,
   plugins: [
     expoClient({
       scheme: "myapp",

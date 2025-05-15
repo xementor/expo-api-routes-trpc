@@ -9,7 +9,9 @@
     "web": "expo start --web",
     "test": "jest --watchAll",
     "db:push": "drizzle-kit push",
-    "db:generate": "drizzle-kit generate"
+    "db:generate": "drizzle-kit generate",
+    "build": "expo export --platform web --clear",
+    "deploy": "eas deploy --prod"
   },
   "jest": {
     "preset": "jest-expo"

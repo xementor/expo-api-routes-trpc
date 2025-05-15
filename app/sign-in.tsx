@@ -1,27 +1,24 @@
 import { useState } from "react";
-import { View, TextInput, Button } from "react-native";
+import { View, TextInput, Button, Alert } from "react-native";
 import { authClient } from "@/trpc/auth-client";
 
 export default function App() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLogin = async () => {
-    await authClient.signIn.email({
-      email,
-      password,
-    });
+  const handleGoogleSignIn = async () => {
+    try {
+      const response = await authClient.signIn.social({
+        provider: "google",
+        // disableRedirect: true,
+      });
+      console.log("Google sign-in response:", response);
+    } catch (error) {
+      console.error("Google sign-in error:", error);
+      Alert.alert("Sign-in Error", "Failed to sign in with Google");
+    }
   };
 
   return (
     <View>
-      <TextInput placeholder="Email" value={email} onChangeText={setEmail} />
-      <TextInput
-        placeholder="Password"
-        value={password}
-        onChangeText={setPassword}
-      />
-      <Button title="Login" onPress={handleLogin} />
+      <Button title="Sign in with Google" onPress={handleGoogleSignIn} />
     </View>
   );
 }
